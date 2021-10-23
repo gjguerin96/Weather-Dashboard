@@ -1,23 +1,23 @@
 // var weatherData = 'https://api.openweathermap.org/data/2.5/onecall?lat=32.7&lon=-117.2&exclude=minutely&appid=43abac14890ebe341638d2d5fc067d02'
-var inputEl = document.querySelector("input[name=city");
-var submitBtn = document.querySelector("#searchbtn");
-var previousCitiesContainer = document.querySelector("#previous-cities");
-var mainEl = document.querySelector("#main-card");
-var forecast = document.querySelector("#forecast");
-var formEl = document.querySelector("form");
-var cityButtons = [];
-var openWeathApiKey = "43abac14890ebe341638d2d5fc067d02"
+var userInput = document.querySelector("input[name=city");
+var searchBtn = document.querySelector("#searchbtn");
+var pastSearches = document.querySelector("#previous-cities");
+var contentEl = document.querySelector("#main-card");
+var futureWeather = document.querySelector("#forecast");
+var form = document.querySelector("form");
+var pastButtons = [];
+var apiKey = "43abac14890ebe341638d2d5fc067d02"
 
 function searchAndGenerateWeather(city) {
     //clear the html for new content
-    mainEl.innerHTML = "";
-    forecast.innerHTML = "";
+    contentEl.innerHTML = "";
+    futureWeather.innerHTML = "";
   
     var geoLocateCityURL =
       "http://api.openweathermap.org/geo/1.0/direct?q=" +
       city +
       ",US&limit=5&appid=" +
-      openWeathApiKey;
+      apiKey;
   
     fetch(geoLocateCityURL)
       .then(function (response) {
@@ -31,7 +31,7 @@ function searchAndGenerateWeather(city) {
           "&lon=" +
           cityInfo.lon +
           "&exclude=minutely,hourly&units=imperial&appid=" +
-          openWeathApiKey;
+          apiKey;
   
         fetch(getWeatherUrl)
           .then(function (response) {
@@ -49,7 +49,7 @@ function searchAndGenerateWeather(city) {
             );
             cityNameEl.append(mainWeatherIcon);
   
-            mainEl.append(cityNameEl);
+            contentEl.append(cityNameEl);
   
             var cityWeatherList = document.createElement("ul");
   
@@ -71,13 +71,13 @@ function searchAndGenerateWeather(city) {
             uvi.textContent = "UV index: " + weatherData.current.uvi;
             cityWeatherList.append(uvi);
   
-            mainEl.append(cityWeatherList);
+            contentEl.append(cityWeatherList);
   
             //--------------------------
             // Forcast Section --------
             var forecastTitle = document.createElement("h2");
             forecastTitle.textContent = "5-day Forecast";
-            forecast.append(forecastTitle);
+            futureWeather.append(forecastTitle);
   
             for (var i = 0; i < 5; i++) {
               var dayXweather = weatherData.daily[i];
@@ -108,20 +108,20 @@ function searchAndGenerateWeather(city) {
               humidity.textContent = "Humidty: " + dayXweather.humidity + "%";
               dayXweatherCard.append(humidity);
   
-              forecast.append(dayXweatherCard);
+              futureWeather.append(dayXweatherCard);
             }
           });
       });
   }
-  formEl.addEventListener("click", function (e) {
+  searchBtn.addEventListener("click", function (e) {
     e.preventDefault();
-    var searchValue = inputEl.value.trim();
+    var searchValue = userInput.value.trim();
   
     if (!searchValue) {
       return;
     }
   
-    cityButtons.push(searchValue)
+    pastButtons.push(searchValue)
     searchAndGenerateWeather(searchValue);
     makeButtons()
   });
@@ -129,14 +129,15 @@ function searchAndGenerateWeather(city) {
   function intialLoad() {
     var previousCitiesButtons = localStorage.getItem("previousCities");
     if (previousCitiesButtons) {
-      cityButtons = JSON.parse(previousCitiesButtons);
+      pastButtons = JSON.parse(previousCitiesButtons);
       makeButtons();
     }
   }
   
   function makeButtons() {
-    for (var i = 0; i < cityButtons.length; i++) {
-      const city = cityButtons[i];
+    pastSearches.innerHTML = ""
+    for (var i = 0; i < pastButtons.length; i++) {
+      const city = pastButtons[i];
       var newBtn = document.createElement("button");
   
       newBtn.textContent = city;
@@ -146,11 +147,11 @@ function searchAndGenerateWeather(city) {
         var searchCity = this.getAttribute("data-value");
         searchAndGenerateWeather(searchCity);
       });
-      previousCitiesContainer.append(newBtn);
+      pastSearches.append(newBtn);
     }
   
-    console.log(cityButtons)
-    localStorage.setItem("previousCities", JSON.stringify(cityButtons));
+    console.log(pastButtons)
+    localStorage.setItem("previousCities", JSON.stringify(pastButtons));
   }
   
   intialLoad()
