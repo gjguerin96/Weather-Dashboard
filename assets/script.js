@@ -70,6 +70,16 @@ function searchAndGenerateWeather(city) {
             var uvi = document.createElement("li");
             uvi.textContent = "UV index: " + weatherData.current.uvi;
             cityWeatherList.append(uvi);
+            if (weatherData.current.uvi > 2) {
+                uvi.setAttribute("style", "background-color: red")
+                }
+                else if (weatherData.current.uvi < 1) {
+                    uvi.setAttribute("style", "background-color: green")
+                    }
+                else {
+                    uvi.setAttribute("style", "background-color: yellow")
+                }
+
   
             contentEl.append(cityWeatherList);
   
