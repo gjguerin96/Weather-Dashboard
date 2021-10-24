@@ -1,15 +1,12 @@
 # Weather-Dashboard
 
 ## Description
-Provide a short description explaining the what, why, and how of your project. Use the following questions as a guide:
-- What was your motivation?
-- Why did you build this project? (Note: the answer is not "Because it was a homework assignment.")
-- What problem does it solve?
-- What did you learn?
+I built this project to better understand how to access APIs, and to learn how to build an application around the information API contains. I learned a lot about the potential APIs have when used correctly. Some APIs are not very useful, but the OpenWeather API I used in building this project is fortunately very useful. Being able to look up the current and future weather for any city is a very powerful tool.
 
+Link to deployed application: https://gjguerin96.github.io/Weather-Dashboard/
 
 ## Usage
-Provide instructions and examples for use. Include screenshots as needed.
+The user enters what city they want to find information about in the text box in the upper left corner of the screen, and then presses the search button to bring up the information. Once they have searched a city, that city will appear as a button under the search button so users can easily look up the cities they are interested in again (see screenshot). Those previously searched cities are saved to the local storage and will persist if the page is reloaded.
 
 ![image showing the search bar, search button, and buttons for past searches](assets/images/weather-dashboard-screenshot.png)
 
