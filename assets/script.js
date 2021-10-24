@@ -14,7 +14,7 @@ function searchAndGenerateWeather(city) {
     futureWeather.innerHTML = "";
   
     var geoLocateCityURL =
-      "http://api.openweathermap.org/geo/1.0/direct?q=" +
+      "https://api.openweathermap.org/geo/1.0/direct?q=" +
       city +
       ",US&limit=5&appid=" +
       apiKey;
